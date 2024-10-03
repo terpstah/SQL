@@ -73,3 +73,17 @@ SELECT industry, employees, AVG(revenue/employees*100) AS REVEMP,
  ORDER BY REVEMP DESC
 
 
+ 
+ SELECT company_name, industry, employees, 	MIN(paid_time_off_days) as "PTO",
+  CASE 
+   WHEN MIN(paid_time_off_days) >= 20 THEN "EXCELLENT"
+   WHEN MIN(paid_time_off_days) >= 15 THEN "GREAT"
+   WHEN MIN(paid_time_off_days) >= 13 THEN "PRETTY GOOD"
+   WHEN MIN(paid_time_off_days) >= 10 THEN "DECENT"
+   WHEN MIN(paid_time_off_days) >= 8 THEN "SO-SO"
+   ELSE "BAD"
+   END AS PTOGOOD
+ FROM fortune_companies
+ GROUP BY industry
+ HAVING AVG(avg_employee_tenure) > 2 AND AVG(maternity_leave_weeks) > 1
+ ORDER BY PTO DESC
